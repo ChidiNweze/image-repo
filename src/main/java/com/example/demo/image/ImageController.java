@@ -44,4 +44,14 @@ public class ImageController {
         imageService.update(imageId, description);
     }
 
+    @RequestMapping(value = "tag", method = RequestMethod.GET)
+    public @ResponseBody List<Image> searchTag(@RequestParam("tag") String tag){
+        return imageService.searchTag(tag);
+    }
+
+    @RequestMapping(value = "tags", method = RequestMethod.GET)
+    public @ResponseBody List<Image> searchTag(@RequestParam("tags") List<String> tags){
+        return imageService.searchMultipleTags(tags);
+    }
+
 }

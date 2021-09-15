@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -57,10 +58,33 @@ public class ImageService {
         imageRepository.save(image);
     }
 
-    //Other Services to make:
-    /*
-SEARCH function
-from characteristics of the images (tags)
-from text */
+    public List<Image> searchTag(String tag) {
+        List<Image> matchingImages = new ArrayList<>();
+        List<Image> allImages = imageRepository.findAll();
 
+        for(Image image : allImages) {
+            if(image.getTags().contains(tag)) {
+                matchingImages.add(image);
+            }
+        }
+
+        return matchingImages;
+    }
+
+    public List<Image> searchMultipleTags(List<String> tags) {
+        List<Image> matchingImages = new ArrayList<>();
+        List<Image> allImages = imageRepository.findAll();
+
+        if (!allImages.isEmpty() && !tags.isEmpty()) {
+            for(String tag : tags) { //nested for-loop could be optimized...
+                for(Image image : allImages) {
+                    if(image.getTags().contains(tag) && !matchingImages.contains(image)) {
+                        matchingImages.add(image);
+                    }
+                }
+            }
+        }
+
+        return matchingImages;
+    }
 }
