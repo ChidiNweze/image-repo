@@ -1,14 +1,12 @@
 package com.example.demo.image;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/image")
+@RequestMapping(path = "/img")
 public class ImageController {
 
     private final ImageService imageService;
@@ -22,6 +20,11 @@ public class ImageController {
     @GetMapping
     public List<Image> getImages() {
         return imageService.getImages();
+    }
+
+    @PostMapping
+    public void createImage(@RequestBody Image image) { //should create dto
+        imageService.createImage(image);
     }
 
 }

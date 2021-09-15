@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ImageService {
@@ -17,6 +18,15 @@ public class ImageService {
 
     public List<Image> getImages() {
         return imageRepository.findAll();
+    }
+
+    public void createImage(Image image) {
+        Optional<Image> imageOptional = imageRepository.findByTitle(image.getTitle());
+        if (imageOptional.isPresent()) {
+            throw new IllegalStateException("Title taken. Rename.");
+        }
+        System.out.println(image);
+        imageRepository.save(image);
     }
 
     //Other Services to make:
