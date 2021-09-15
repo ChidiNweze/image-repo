@@ -1,5 +1,7 @@
 package com.example.demo.image;
 
+import org.springframework.lang.NonNull;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -19,6 +21,7 @@ public class Image {
             generator = "image_sequence"
     )
     private Long id;
+    @NonNull
     private String title;
     private String description;
 

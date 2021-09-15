@@ -19,17 +19,24 @@ public class ImageController {
 
     @GetMapping
     public List<Image> getImages() {
-        return imageService.getImages();
+        return imageService.getAll();
     }
 
     @PostMapping
     public void create(@RequestBody Image image) { //should create dto
-        imageService.createImage(image);
+        imageService.create(image);
     }
 
-    @DeleteMapping(path = "/{imageId}")
+    @DeleteMapping(path = "{imageId}")
     public void delete(@PathVariable("imageId") Long imageId) {
-        imageService.deleteImage(imageId);
+        imageService.delete(imageId);
+    }
+
+    @PutMapping(path = "{imageId}")
+    public void updateDescription(
+            @PathVariable("imageId") Long imageId,
+            @RequestParam(required = false) String description) {
+        imageService.update(imageId, description);
     }
 
 }
