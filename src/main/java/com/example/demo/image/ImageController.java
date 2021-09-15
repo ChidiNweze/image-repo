@@ -23,8 +23,13 @@ public class ImageController {
     }
 
     @PostMapping
-    public void createImage(@RequestBody Image image) { //should create dto
+    public void create(@RequestBody Image image) { //should create dto
         imageService.createImage(image);
+    }
+
+    @DeleteMapping(path = "/{imageId}")
+    public void delete(@PathVariable("imageId") Long imageId) {
+        imageService.deleteImage(imageId);
     }
 
 }

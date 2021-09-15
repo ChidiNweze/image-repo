@@ -29,6 +29,15 @@ public class ImageService {
         imageRepository.save(image);
     }
 
+    public void deleteImage(Long imageId) {
+        if(imageRepository.existsById(imageId)) {
+            imageRepository.deleteById(imageId);
+        } else {
+            throw new IllegalStateException("Image with Id "+ imageId + " does not exist");
+        }
+
+    }
+
     //Other Services to make:
     /*
 SEARCH function
