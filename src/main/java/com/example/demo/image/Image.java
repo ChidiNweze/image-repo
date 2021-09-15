@@ -1,13 +1,29 @@
 package com.example.demo.image;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 //It's been a while since I worked with Firebase or blob data, so I chose to abstract away that aspect
+@Entity
+@Table
 public class Image {
+    @Id
+    @SequenceGenerator( //auto-generated rather than writing SQL-statements for simplicity
+            name = "image_sequence",
+            sequenceName = "image_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "image_sequence"
+    )
     private Long id;
     private String title;
     private String description;
+
+    @ElementCollection
+    @Column( name = "tag")
     private List<String> tags;
 
     public Image() {
