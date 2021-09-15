@@ -16,14 +16,6 @@ public class ImageService {
     }
 
     public List<Image> getImages() {
-        List<Image> test = List.of(
-                new Image(
-                        1L,
-                        "My water bottle",
-                        "red water bottle sitting on desk",
-                        List.of("red","water","bottle","hydration")
-                )
-        );
         return imageRepository.findAll();
     }
 
