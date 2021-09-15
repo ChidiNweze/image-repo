@@ -27,8 +27,17 @@ public class ImageService {
         if (imageOptional.isPresent()) {
             throw new IllegalStateException("Title taken. Rename.");
         }
-        System.out.println(image);
         imageRepository.save(image);
+    }
+
+    public void createMultiple(List<Image> images) {
+        for (Image image : images) {
+            Optional<Image> imageOptional = imageRepository.findByTitle(image.getTitle());
+            if (imageOptional.isPresent()) {
+                throw new IllegalStateException("Title "+ image.getTitle()+ " taken. Rename.");
+            }
+            imageRepository.save(image);
+        }
     }
 
     public void delete(Long imageId) {
@@ -52,12 +61,6 @@ public class ImageService {
     /*
 SEARCH function
 from characteristics of the images (tags)
-from text
+from text */
 
-ADD image(s) to the repository
-one / bulk / enormous amount of images
-
-DELETE image(s)
-one / bulk / selected / all images
-*/
 }

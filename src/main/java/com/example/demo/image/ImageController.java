@@ -23,8 +23,13 @@ public class ImageController {
     }
 
     @PostMapping
-    public void create(@RequestBody Image image) { //should create dto
+    public void create(@RequestBody Image image) { //should create dto, rather than using entity in production code
         imageService.create(image);
+    }
+
+    @PostMapping(path = "photoDump")
+    public void createAll(@RequestBody List<Image> images) { //should create dto, rather than using entity in production code
+        imageService.createMultiple(images);
     }
 
     @DeleteMapping(path = "{imageId}")
