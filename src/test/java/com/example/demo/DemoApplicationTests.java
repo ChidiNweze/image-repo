@@ -26,6 +26,8 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
+import java.util.Optional;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.*;
 
@@ -153,4 +155,23 @@ class DemoApplicationTests {
 				.andExpect(jsonPath("$[1].title", is("Culinary perfection")));
 	}
 
+	@Test
+	public void updateDescription() throws Exception {
+		Image testImage = new Image(
+				5L,
+				"The Moon",
+				"Running out of ideas here, folks",
+				List.of("shiny","pinkmoon","wonder")
+		);
+		Mockito.when(imageRepository.findById(testImage.getId())).thenReturn(Optional.of(testImage));
+
+		imageRepository.save(testImage);
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/img/"+testImage.getId()+"?description=crescent")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content(this.mapper.writeValueAsString("CRESCENT!"));
+
+		mockMvc.perform(mockRequest)
+				.andExpect(status().isOk());
+	}
 }
